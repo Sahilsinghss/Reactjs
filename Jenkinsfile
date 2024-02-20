@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        GIT_URL = 'https://github.com/Sahilsinghss/springboot.git'
+        GIT_URL = 'https://github.com/Sahilsinghss/Reactjs.git'
         GIT_CREDS = '92ec0319-697f-49d3-b22d-a99a7f8439e8'
         GIT_BRANCH = 'main'
         SPRING_PROFILE = 'dev'
