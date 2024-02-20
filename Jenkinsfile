@@ -28,6 +28,7 @@ pipeline {
         steps {
             script {
                 // Build the Spring Boot project
+                sh 'npm install react-scripts --save'
                 sh 'npm run build'
             }
         }
