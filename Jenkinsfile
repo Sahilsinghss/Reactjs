@@ -6,7 +6,6 @@ pipeline {
         GIT_CREDS = 'jenkins-oc'
         GIT_BRANCH = 'main'
         SPRING_PROFILE = 'React-dev'
-        dockerimagename = credentials('DockerRepo')
         dockercreds = 'dockerhublogin'
         dockerurl = 'https://registry.hub.docker.com'
         scannerHome = tool 'sonar'
