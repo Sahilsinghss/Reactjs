@@ -32,7 +32,7 @@ pipeline {
                 ${scannerHome}/bin/sonar-scanner \
                 -D sonar.projectKey=com.abhishek:spring-boot-demo \
                 -D sonar.projectName=spring-boot-demo \
-                -D sonar.languages=js,ts \  // DEPRECATED, do not use this option
+                -D sonar.languages=js \
                 -D sonar.sources=./src \
                 '''
             }
