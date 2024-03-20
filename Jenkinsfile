@@ -25,7 +25,7 @@ pipeline {
                 }
             }
         }
-
+      stage('Sonarqube') {
         steps {
             withSonarQubeEnv('central sonar') {
                 sh '''
@@ -37,7 +37,7 @@ pipeline {
                 '''
             }
         }
-    
+      }
     stage('Build') {
         steps {
             script {
