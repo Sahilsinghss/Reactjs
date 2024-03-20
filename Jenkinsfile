@@ -20,7 +20,7 @@ pipeline {
                     deleteDir()
                     
                     // Git clone
-                    checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: GIT_URL,credentialsId: GIT_CREDS]]])
+                    checkout([$class: 'GitSCM', branches: [[name: '/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: GIT_URL,credentialsId: GIT_CREDS]]])
                     echo "Cloned code is in directory: ${pwd()}"
                 }
             }
