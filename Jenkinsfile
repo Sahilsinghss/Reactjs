@@ -9,6 +9,7 @@ pipeline {
         dockerimagename = credentials('DockerRepo')
         dockercreds = 'dockerhublogin'
         dockerurl = 'https://registry.hub.docker.com'
+        scannerHome = tool 'sonar'
     }
 
     stages {
@@ -24,6 +25,19 @@ pipeline {
                 }
             }
         }
+
+        steps {
+            withSonarQubeEnv('central sonar') {
+                sh '''
+                ${scannerHome}/bin/sonar-scanner \
+                -D sonar.projectKey=com.abhishek:spring-boot-demo \
+                -D sonar.projectName=spring-boot-demo \
+                -D sonar.languages=js,ts \  // DEPRECATED, do not use this option
+                -D sonar.sources=./src \
+                '''
+            }
+        }
+    }
     stage('Build') {
         steps {
             script {
