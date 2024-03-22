@@ -8,7 +8,6 @@ pipeline {
         SPRING_PROFILE = 'React-dev'
         dockercreds = 'dockerhublogin'
         dockerurl = 'https://registry.hub.docker.com'
-        scannerHome = tool 'sonar'
     }
 
     stages {
@@ -24,19 +23,6 @@ pipeline {
                 }
             }
         }
-      stage('Sonarqube') {
-        steps {
-            withSonarQubeEnv('central sonar') {
-                sh '''
-                ${scannerHome}/bin/sonar-scanner \
-                -D sonar.projectKey=com.abhishek:spring-boot-demo \
-                -D sonar.projectName=spring-boot-demo \
-                -D sonar.languages=js \
-                -D sonar.sources=./src \
-                '''
-            }
-        }
-      }
     stage('Build') {
         steps {
             script {
