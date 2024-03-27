@@ -55,6 +55,51 @@ pipeline {
         }
       }
     }
+
+    stage('deploy on openshift') {
+      steps{
+        echo "deploying on openshift"
+        script {
+          withEnv("PATH OC =${tool 'oc'}") {
+            openshift.withCluster('devopsdaemon-dev') {
+              openshift.withProject('devopsdaemon-dev') {
+                 def app = openshift.newApp('registry.access.redhat.com/jboss-fuse-6/fis-java-openshift')
+        def dcpatch = [
+               "metadata":[
+                   "name":"fis-java-openshift",
+                   "namespace":"devopsdaemon-dev"
+            ],
+               "apiVersion":"apps.openshift.io/v1",
+               "kind":"DeploymentConfig",
+               "spec":[
+                   "template":[
+                       "metadata":[:],
+                       "spec":[
+                           "containers":[
+                                 ["image":"registry.access.redhat.com/jboss-fuse-6/fis-java-openshift",
+                                  "name":"fis-java-openshift",
+                                  "resources":[:],
+                                  "ports":[
+                                       ["name":"jolokia",
+                                        "containerPort":8778,
+                                        "protocol":"TCP"
+                                        ]
+                                       ]
+                                  ]
+                           ],
+                           "securityContext":[:],
+                       ]
+                   ]
+                   ]
+               ]
+
+        openshift.apply(dcpatch)
+              }
+            }
+          }
+        }
+      }
+    }
     
     }
 }
