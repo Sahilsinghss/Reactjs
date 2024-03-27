@@ -112,22 +112,27 @@ pipeline {
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: your-app-deployment
+  name: frontend
+  annotations:
+    dummy-annotation: "trigger-update"
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
-      app: your-app
+      app: frontend
   template:
     metadata:
       labels:
-        app: your-app
+        app: frontend
     spec:
+      imagePullSecrets:
+      - name: docker-cdcp
       containers:
-      - name: your-app
-        image: ${env.DOCKER_IMAGE}:latest
+      - name: frontend
+        image: dynamicdevops/cdcp:frontend_cdcp1
+        imagePullPolicy: Always
         ports:
-        - containerPort: 80
+        - containerPort: 3000
 """
                     openshift.withCluster(env.CLUSTER) {
                         openshift.withProject(env.OPENSHIFT_PROJECT) {
