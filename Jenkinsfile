@@ -136,18 +136,7 @@ spec:
 """
                     openshift.withCluster(env.CLUSTER) {
                         openshift.withProject(env.OPENSHIFT_PROJECT) {
-                            // def existingDeployments = openshift.selector('dc', env.OPENSHIFT_DEPLOYMENT_CONFIG)
-                            // if (existingDeployments.exists()) {
-                            //     echo 'Deployment config already exists, rolling out an update...'
-                            //     existingDeployments.rollout().latest()
-                            // } else {
-                            //     echo 'Creating new deployment config...'
-                            //     openshift.newApp(env.OPENSHIFT_DEPLOYMENT_CONFIG, '--name=your-app-name', '--image-stream=image-stream-name:latest')
-                            // }
                             openshift.apply(file: 'deployment.yaml')
-                            // Apply the deployment YAML file
-                            // sh 'export KUBECONFIG=/home/azureuser/.kube/config'
-                            // sh "oc apply -f ${env.DEPLOYMENT_FILE}  --kubeconfig=/var/lib/jenkins/.jenkins/.kube/config"
                         }
                     }
                 }
