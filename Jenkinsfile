@@ -108,6 +108,27 @@ pipeline {
             stage('Deploy') {
             steps {
                 script {
+                    writeFile file: 'deployment.yaml', text: """
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: your-app-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: your-app
+  template:
+    metadata:
+      labels:
+        app: your-app
+    spec:
+      containers:
+      - name: your-app
+        image: ${env.DOCKER_IMAGE}:latest
+        ports:
+        - containerPort: 80
+"""
                     openshift.withCluster(env.CLUSTER) {
                         openshift.withProject(env.OPENSHIFT_PROJECT) {
                             // def existingDeployments = openshift.selector('dc', env.OPENSHIFT_DEPLOYMENT_CONFIG)
@@ -118,7 +139,7 @@ pipeline {
                             //     echo 'Creating new deployment config...'
                             //     openshift.newApp(env.OPENSHIFT_DEPLOYMENT_CONFIG, '--name=your-app-name', '--image-stream=image-stream-name:latest')
                             // }
-                            openshift.apply(file: env.YAML_FILE)
+                            openshift.apply(file: 'deployment.yaml')
                             // Apply the deployment YAML file
                             // sh 'export KUBECONFIG=/home/azureuser/.kube/config'
                             // sh "oc apply -f ${env.DEPLOYMENT_FILE}  --kubeconfig=/var/lib/jenkins/.jenkins/.kube/config"
