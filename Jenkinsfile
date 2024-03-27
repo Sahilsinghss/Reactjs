@@ -9,6 +9,7 @@ pipeline {
         dockerimagename = credentials('DockerRepo')
         dockercreds = 'dockerhublogin'
         dockerurl = 'https://registry.hub.docker.com'
+        DEPLOYMENT_FILE = '/var/lib/jenkins/.jenkins/workspace/react-oc/deployment.yaml'
     }
 
     stages {
@@ -100,6 +101,28 @@ pipeline {
     //     }
     //   }
     // }
+
+            stage('Deploy') {
+            steps {
+                script {
+                    openshift.withCluster() {
+                        openshift.withProject(env.OPENSHIFT_PROJECT) {
+                            // def existingDeployments = openshift.selector('dc', env.OPENSHIFT_DEPLOYMENT_CONFIG)
+                            // if (existingDeployments.exists()) {
+                            //     echo 'Deployment config already exists, rolling out an update...'
+                            //     existingDeployments.rollout().latest()
+                            // } else {
+                            //     echo 'Creating new deployment config...'
+                            //     openshift.newApp(env.OPENSHIFT_DEPLOYMENT_CONFIG, '--name=your-app-name', '--image-stream=image-stream-name:latest')
+                            // }
+ 
+                            // Apply the deployment YAML file
+                            sh "oc apply -f ${env.DEPLOYMENT_FILE}"
+                        }
+                    }
+                }
+            }
+        }
     
     }
 }
