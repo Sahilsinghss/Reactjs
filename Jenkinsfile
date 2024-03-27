@@ -119,8 +119,8 @@ pipeline {
                             // }
  
                             // Apply the deployment YAML file
-                            sh 'export KUBECONFIG=/home/azureuser/.kube/config'
-                            sh "oc apply -f ${env.DEPLOYMENT_FILE}  --kubeconfig=/home/azureuser/.kube/config"
+                            // sh 'export KUBECONFIG=/home/azureuser/.kube/config'
+                            sh "oc apply -f ${env.DEPLOYMENT_FILE}  --kubeconfig=/var/lib/jenkins/.jenkins/.kube/config"
                         }
                     }
                 }
