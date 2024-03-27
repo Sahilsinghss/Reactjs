@@ -27,37 +27,37 @@ pipeline {
                 }
             }
         }
-    stage('Build') {
-        steps {
-            script {
-                // Build the Spring Boot project
-                sh 'npm install react-scripts --save'
-                sh 'npm run build'
-            }
-        }
-    }
+    // stage('Build') {
+    //     steps {
+    //         script {
+    //             // Build the Spring Boot project
+    //             sh 'npm install react-scripts --save'
+    //             sh 'npm run build'
+    //         }
+    //     }
+    // }
 
 
-    stage('Build image') {
-      steps{
-        script {
-          dockerImage = docker.build dockerimagename
-        }
-      }
-    }
+    // stage('Build image') {
+    //   steps{
+    //     script {
+    //       dockerImage = docker.build dockerimagename
+    //     }
+    //   }
+    // }
 
-    stage('Pushing Image') {
-      environment {
-               registryCredential = 'dockerhublogin'
-           }
-      steps{
-        script {
-          docker.withRegistry( dockerurl, registryCredential ) {
-            dockerImage.push("$SPRING_PROFILE")
-          }
-        }
-      }
-    }
+    // stage('Pushing Image') {
+    //   environment {
+    //            registryCredential = 'dockerhublogin'
+    //        }
+    //   steps{
+    //     script {
+    //       docker.withRegistry( dockerurl, registryCredential ) {
+    //         dockerImage.push("$SPRING_PROFILE")
+    //       }
+    //     }
+    //   }
+    // }
 
     // stage('deploy on openshift') {
     //   steps{
