@@ -119,7 +119,7 @@ pipeline {
                             // }
  
                             // Apply the deployment YAML file
-                            sh "oc apply -f ${env.DEPLOYMENT_FILE}"
+                            sh "oc apply -f ${env.DEPLOYMENT_FILE}  --kubeconfig=/home/azureuser/.kube/config"
                         }
                     }
                 }
