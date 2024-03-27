@@ -10,6 +10,7 @@ pipeline {
         dockercreds = 'dockerhublogin'
         dockerurl = 'https://registry.hub.docker.com'
         DEPLOYMENT_FILE = '/var/lib/jenkins/.jenkins/workspace/react-oc/deployment.yaml'
+        OPENSHIFT_PROJECT = 'devopsdaemon-dev'
     }
 
     stages {
