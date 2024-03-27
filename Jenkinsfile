@@ -9,7 +9,7 @@ pipeline {
         dockerimagename = credentials('DockerRepo')
         dockercreds = 'dockerhublogin'
         dockerurl = 'https://registry.hub.docker.com'
-        DEPLOYMENT_FILE = '/var/lib/jenkins/.jenkins/workspace/react-oc/deployment.yaml'
+        YAML_FILE = '/var/lib/jenkins/.jenkins/workspace/react-oc/deployment.yaml'
         OPENSHIFT_PROJECT = 'devopsdaemon-dev'
     }
 
@@ -117,10 +117,10 @@ pipeline {
                             //     echo 'Creating new deployment config...'
                             //     openshift.newApp(env.OPENSHIFT_DEPLOYMENT_CONFIG, '--name=your-app-name', '--image-stream=image-stream-name:latest')
                             // }
- 
+                            openshift.apply(file: env.YAML_FILE)
                             // Apply the deployment YAML file
                             // sh 'export KUBECONFIG=/home/azureuser/.kube/config'
-                            sh "oc apply -f ${env.DEPLOYMENT_FILE}  --kubeconfig=/var/lib/jenkins/.jenkins/.kube/config"
+                            // sh "oc apply -f ${env.DEPLOYMENT_FILE}  --kubeconfig=/var/lib/jenkins/.jenkins/.kube/config"
                         }
                     }
                 }
