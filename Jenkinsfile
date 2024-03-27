@@ -11,6 +11,7 @@ pipeline {
         dockerurl = 'https://registry.hub.docker.com'
         YAML_FILE = '/var/lib/jenkins/.jenkins/workspace/react-oc/deployment.yaml'
         OPENSHIFT_PROJECT = 'devopsdaemon-dev'
+        CLUSTER = 'devopsdaemon-dev'
     }
 
     stages {
@@ -107,7 +108,7 @@ pipeline {
             stage('Deploy') {
             steps {
                 script {
-                    openshift.withCluster() {
+                    openshift.withCluster(env.CLUSTER) {
                         openshift.withProject(env.OPENSHIFT_PROJECT) {
                             // def existingDeployments = openshift.selector('dc', env.OPENSHIFT_DEPLOYMENT_CONFIG)
                             // if (existingDeployments.exists()) {
